@@ -79,45 +79,80 @@ document.getElementById('authModal').addEventListener('click', (e) => {
 });
 
 // Toggle Between Admin/Volunteer
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const slider = document.querySelector('.toggle-slider');
-        const forms = document.querySelectorAll('.auth-form');
-        
-        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Move slider
-        slider.style.left = this.dataset.role === 'admin' ? '50%' : '0';
-        
-        // Show correct form
-        forms.forEach(form => form.classList.remove('show'));
-        document.querySelector(`.${this.dataset.role}-form`).classList.add('show');
-    });
+// grab elements
+const authModal      = document.getElementById('authModal');
+const toggleContainer= authModal.querySelector('.toggle-container');
+const toggleBtns     = toggleContainer.querySelectorAll('.toggle-btn');
+const volRegForm     = authModal.querySelector('.volunteer-register-form');
+const volLoginForm   = authModal.querySelector('.volunteer-login-form');
+const adminLoginForm = authModal.querySelector('.admin-login-form');
+const navLogin       = document.getElementById('navLogin');
+const navRegister    = document.getElementById('navRegister');
+const closeBtn       = authModal.querySelector('.close-modal');
+
+let mode       = 'register';   // 'register' or 'login'
+let activeRole = 'volunteer';  // 'volunteer' or 'admin'
+
+// open handlers
+navRegister.addEventListener('click', e => {
+  e.preventDefault();
+  mode = 'register';
+  activeRole = 'volunteer';
+  updateUI();
+  authModal.style.display = 'block';
+});
+navLogin.addEventListener('click', e => {
+  e.preventDefault();
+  mode = 'login';
+  activeRole = 'volunteer';
+  updateUI();
+  authModal.style.display = 'block';
 });
 
-// Switch between Login/Register
-document.querySelectorAll('.switch-form').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const forms = document.querySelectorAll('.auth-form');
-        forms.forEach(form => {
-            if(form.classList.contains('show')) {
-                form.querySelector('button').textContent = 'Register';
-                form.querySelector('h3').textContent = form.classList.contains('volunteer-form') 
-                    ? 'Volunteer Register' 
-                    : 'Admin Register';
-                e.target.textContent = 'Login';
-            } else {
-                form.querySelector('button').textContent = 'Login';
-                form.querySelector('h3').textContent = form.classList.contains('volunteer-form') 
-                    ? 'Volunteer Login' 
-                    : 'Admin Login';
-                e.target.textContent = 'Register';
-            }
-        });
-    });
+// close handler
+closeBtn.addEventListener('click', () => authModal.style.display = 'none');
+
+// toggle between Volunteer/Admin in login
+toggleBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeRole = btn.dataset.role;
+    updateUI();
+  });
 });
+
+function updateUI() {
+  if (mode === 'register') {
+    // **REGISTER**: only volunteer-register
+    toggleContainer.style.display     = 'none';
+    volRegForm.style.display          = 'block';
+    volLoginForm.style.display        = 'none';
+    adminLoginForm.style.display      = 'none';
+
+  } else {
+    // **LOGIN**: toggle bar + one of the two login forms
+    toggleContainer.style.display     = 'flex';
+    volRegForm.style.display          = 'none';
+
+    // highlight active toggle
+    toggleBtns.forEach(b => {
+      b.classList.toggle('active', b.dataset.role === activeRole);
+    });
+
+    if (activeRole === 'volunteer') {
+      volLoginForm.style.display      = 'block';
+      adminLoginForm.style.display    = 'none';
+    } else {
+      volLoginForm.style.display      = 'none';
+      adminLoginForm.style.display    = 'block';
+    }
+  }
+}
+
+// click outside to close (optional)
+window.addEventListener('click', e => {
+  if (e.target === authModal) authModal.style.display = 'none';
+});
+
 
 //WEather popup code for backend
 document.getElementById('weatherPopup').addEventListener('click', function() {
@@ -411,3 +446,95 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+
+// Payment
+
+
+
+// SOSCONFRM
+        // Generate a random SOS ID
+        function generateSOSId() {
+            const prefix = "SOS";
+            const randomNum = Math.floor(10000 + Math.random() * 90000);
+            const countrySuffix = "IN";
+            return `${prefix}-${randomNum}-${countrySuffix}`;
+        }
+        
+        // Set random SOS ID when page loads
+        window.onload = function() {
+            document.getElementById('sosId').innerText = generateSOSId();
+            
+            // Simulate a random ETA between 10-30 minutes
+            const minTime = 10;
+            const maxTime = 30;
+            const randomETA = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+            document.getElementById('etaTime').innerText = `${randomETA} minutes`;
+        };
+        
+        // Copy SOS ID to clipboard
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                alert("SOS ID copied to clipboard!");
+            }, function() {
+                alert("Failed to copy text");
+            });
+        }
+
+
+        // volunteer imag
+        // Slideshow logic
+  const images = [
+    "images/Bihar.jpg",
+    "images/Disaster.jpg",
+    "images/Heroo.jpg",
+    // "images/Bihar.jpg"
+    // Add more URLs of natural disaster images of India
+  ];
+
+  let currentImageIndex = 0;
+  const slideshow = document.getElementById('slideshow');
+
+  setInterval(() => {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    slideshow.src = images[currentImageIndex];
+  }, 3000); // Change image every 3 seconds
+
+  // Typing effect logic
+  const texts = [
+    "Hey, we're here to help you. Don't worry!",
+    "Stay calm, stay safe. We've got your back.",
+    "Together, we can face any storm.",
+    "Help is just around the corner."
+  ];
+
+  let currentTextIndex = 0;
+  let charIndex = 0;
+  let typing = true;
+  const typedText = document.getElementById('typed-text');
+
+  function typeText() {
+    const currentText = texts[currentTextIndex];
+    if (typing) {
+      typedText.innerText = currentText.substring(0, charIndex++);
+      if (charIndex > currentText.length) {
+        typing = false;
+        setTimeout(typeText, 2000); // Wait before erasing
+      } else {
+        setTimeout(typeText, 100);
+      }
+    } else {
+      typedText.innerText = currentText.substring(0, charIndex--);
+      if (charIndex < 0) {
+        typing = true;
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+        setTimeout(typeText, 500);
+      } else {
+        setTimeout(typeText, 50);
+      }
+    }
+  }
+
+  typeText();

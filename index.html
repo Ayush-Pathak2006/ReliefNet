@@ -27,8 +27,11 @@
         
         <!-- Auth Buttons Container -->
         <div class="auth-buttons">
-            <button class="login-btn">Login</button>
-            <button class="register-btn">Register</button>
+            
+            <a href="#" id="navLogin"><button class="login-btn">Login</button></a>
+            
+            <a href="#" id="navRegister"><button class="register-btn">Register</button></a>
+          
         </div>
         
         <!-- Hero Content -->
@@ -51,34 +54,63 @@
         </div>
         
         <!-- Login Form (Initially hidden) -->
-        <div class="auth-modal" id="authModal">
+        <div class="auth-modal" id="authModal" style="display:none;">
             <div class="auth-modal-content">
-                <div class="toggle-container">
-                    <div class="toggle-slider"></div>
-                    <button class="toggle-btn active" data-role="volunteer">Volunteer</button>
-                    <button class="toggle-btn" data-role="admin">Admin</button>
-                </div>
-                
-                <!-- Volunteer Form -->
-                <form class="auth-form volunteer-form show">
-                    <h3>Volunteer Login</h3>
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
-                    <button type="submit">Login</button>
-                    <p class="switch-text">Don't have an account? <a href="#" class="switch-form">Register</a></p>
-                </form>
-                
-                <!-- Admin Form -->
-                <form class="auth-form admin-form">
-                    <h3>Admin Login</h3>
-                    <input type="email" placeholder="Admin Email" required>
-                    <input type="password" placeholder="Password" required>
-                    <input type="text" placeholder="Security Code" required>
-                    <button type="submit">Login</button>
-                </form>
+              <!-- toggle only for login -->
+              <div class="toggle-container">
+                <button class="toggle-btn active" data-role="volunteer">Volunteer</button>
+                <button class="toggle-btn" data-role="admin">Admin</button>
+              </div>
+          
+              <!-- Volunteer Register -->
+              <form class="volunteer-register-form auth-form">
+                <h3>Volunteer Register</h3>
+                <input type="text"     name="name"     placeholder="Name"     required>
+                <input type="number"   name="age"      placeholder="Age"      required>
+                <input type="email"    name="email"    placeholder="Email"    required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Register</button>
+              </form>
+          
+              <!-- Volunteer Login -->
+              <form class="volunteer-login-form auth-form">
+                <h3>Volunteer Login</h3>
+                <input type="email"    name="email"    placeholder="Email"    required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+              </form>
+          
+              <!-- Admin Login -->
+              <form class="admin-login-form auth-form">
+                <h3>Admin Login</h3>
+                <input type="email"    name="email"        placeholder="Admin Email"  required>
+                <input type="password" name="password"     placeholder="Password"     required>
+                <input type="text"     name="securityCode" placeholder="Security Code" required>
+                <button type="submit">Login</button>
+              </form>
+          
+              <!-- optional close button -->
+              <button class="close-modal">×</button>
             </div>
-        </div>
+          </div>
+          
+      
     </section>
+    <!-- New section below yellow strip -->
+<<div class="main-container">
+    <!-- Left - Slideshow -->
+    <div class="card">
+      <img id="slideshow" src="your_first_image_url.jpg" alt="Disaster Image" class="slide-image">
+    </div>
+  
+    <!-- Right - Typing Effect -->
+    <div class="card">
+      <div class="typing-text">
+        <span id="typed-text"></span><span id="cursor">|</span>
+      </div>
+    </div>
+  </div>
+  
     
     <!-- Services Section -->
     <section class="features-section">
