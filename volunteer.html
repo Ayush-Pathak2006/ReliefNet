@@ -1,68 +1,744 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volunteer Statistics</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0;
+      color: #e74c3c;
+    }
+    .stats {
+      display: flex;
+      gap: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .stat-box {
+      text-align: center;
+      flex: 1;
+      cursor: pointer;
+      padding: 10px;
+      transition: background-color 0.2s;
+    }
+    .stat-box:hover {
+      background-color: #f9f9f9;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: #777;
+    }
+    .tasks {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .section-title {
+      background: #e74c3c;
+      color: white;
+      padding: 10px 15px;
+      margin: 0;
+    }
+    .task-item {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .task-item:hover {
+      background-color: #f9f9f9;
+    }
+    .task-content {
+      flex: 1;
+    }
+    .task-title {
+      font-weight: 500;
+    }
+    .task-details {
+      font-size: 14px;
+      color: #777;
+      margin-top: 5px;
+    }
+    .task-actions {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .accept-btn {
+      background: #2ecc71;
+      color: white;
+    }
+    .accept-btn:hover {
+      background: #27ae60;
+    }
+    .decline-btn {
+      background: #f1f1f1;
+      color: #333;
+    }
+    .decline-btn:hover {
+      background: #e5e5e5;
+    }
+    .completed {
+      background: #f9f9f9;
+    }
+    .completed .task-title {
+      text-decoration: line-through;
+      color: #777;
+    }
+    .completed-tag {
+      background: #3498db;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .accepted-tag {
+      background: #f39c12;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .close {
+      color: #777;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #333;
+    }
+    .navbar {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-item {
+      cursor: pointer;
+      padding: 5px 0;
+      color: #777;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-item:hover {
+      color: #e74c3c;
+    }
+    .tab-content {
+      display: none;
+    }
+    .active-tab {
+      display: block;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #2ecc71;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #2ecc71;
+      color: white;
+      padding: 15px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: none;
+      animation: slide-in 0.3s ease-out;
+    }
+    @keyframes slide-in {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <div class="stats-container">
-        <header>
-            <h1>Volunteer Analytics Dashboard</h1>
-            <p>Comprehensive overview of volunteer participation and impact</p>
-        </header>
-
-        <div class="stat-cards">
-            <div class="stat-card total-volunteers">
-                <h3>Total Volunteers</h3>
-                <div class="stat-value">1,250</div>
-                <div class="stat-change positive">+12% since last month</div>
-            </div>
-            
-            <div class="stat-card active-volunteers">
-                <h3>Active Volunteers</h3>
-                <div class="stat-value">875</div>
-                <div class="stat-change positive">+8% since last month</div>
-            </div>
-            
-            <div class="stat-card hours-contributed">
-                <h3>Hours Contributed</h3>
-                <div class="stat-value">9,540</div>
-                <div class="stat-change positive">+15% since last month</div>
-            </div>
-            
-            <div class="stat-card projects-completed">
-                <h3>Projects Completed</h3>
-                <div class="stat-value">42</div>
-                <div class="stat-change positive">+5% since last month</div>
-            </div>
+  <div class="container">
+    <header>
+      <h1>Volunteer Dashboard</h1>
+      <div class="navbar">
+        <div class="nav-item" onclick="showTab('tasks-tab')">Tasks</div>
+        <div class="nav-item" onclick="showTab('profile-tab')">Profile</div>
+        <div class="nav-item" onclick="showTab('settings-tab')">Settings</div>
+      </div>
+    </header>
+    
+    <div id="tasks-tab" class="tab-content active-tab">
+      <div class="stats">
+        <div class="stat-box" onclick="showStatsDetails('completed')">
+          <div class="stat-value">12</div>
+          <div class="stat-label">Tasks Completed</div>
         </div>
-
-        <div class="charts-container">
-            <div class="chart-box">
-                <h3>Volunteer Growth</h3>
-                <canvas id="volunteerGrowthChart"></canvas>
-            </div>
-            
-            <div class="chart-box">
-                <h3>Volunteer Distribution by Department</h3>
-                <canvas id="departmentChart"></canvas>
-            </div>
-            
-            <div class="chart-box">
-                <h3>Hours Contributed Monthly</h3>
-                <canvas id="hoursContributedChart"></canvas>
-            </div>
-            
-            <div class="chart-box">
-                <h3>Volunteer Age Distribution</h3>
-                <canvas id="ageDistributionChart"></canvas>
-            </div>
+        <div class="stat-box" onclick="showStatsDetails('hours')">
+          <div class="stat-value">36</div>
+          <div class="stat-label">Hours Contributed</div>
         </div>
+        <div class="stat-box" onclick="showStatsDetails('pending')">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Pending Tasks</div>
+        </div>
+      </div>
+      
+      <div class="tasks">
+        <h2 class="section-title">Available Tasks</h2>
+        
+        <div class="task-item" onclick="showTaskDetails('task1')">
+          <div class="task-content">
+            <div class="task-title">Emergency Response Training</div>
+            <div class="task-details">May 2 • 2 hours • Fire Station #3</div>
+          </div>
+          <div class="task-actions" onclick="event.stopPropagation()">
+            <button class="accept-btn" onclick="acceptTask('task1')">Accept</button>
+            <button class="decline-btn" onclick="declineTask('task1')">Decline</button>
+          </div>
+        </div>
+        
+        <div class="task-item" onclick="showTaskDetails('task2')">
+          <div class="task-content">
+            <div class="task-title">Community Fire Safety Workshop</div>
+            <div class="task-details">May 8 • 3 hours • Community Center</div>
+          </div>
+          <div class="task-actions" onclick="event.stopPropagation()">
+            <button class="accept-btn" onclick="acceptTask('task2')">Accept</button>
+            <button class="decline-btn" onclick="declineTask('task2')">Decline</button>
+          </div>
+        </div>
+        
+        <div class="task-item" onclick="showTaskDetails('task3')">
+          <div class="task-content">
+            <div class="task-title">Equipment Maintenance</div>
+            <div class="task-details">May 15 • 4 hours • Main Station</div>
+          </div>
+          <div class="task-actions" onclick="event.stopPropagation()">
+            <button class="accept-btn" onclick="acceptTask('task3')">Accept</button>
+            <button class="decline-btn" onclick="declineTask('task3')">Decline</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tasks" style="margin-top: 20px;">
+        <h2 class="section-title">Your Tasks</h2>
+        
+        <div class="task-item" onclick="showTaskDetails('task4')">
+          <div class="task-content">
+            <div class="task-title">First Aid Training Session</div>
+            <div class="task-details">May 1 • 2 hours • Community Hospital</div>
+          </div>
+          <div class="task-actions">
+            <span class="accepted-tag">Accepted</span>
+          </div>
+        </div>
+        
+        <div class="task-item completed" onclick="showTaskDetails('task5')">
+          <div class="task-content">
+            <div class="task-title">School Fire Drill Assistance</div>
+            <div class="task-details">Apr 25 • 2 hours • Lincoln Elementary</div>
+          </div>
+          <div class="task-actions">
+            <span class="completed-tag">Completed</span>
+          </div>
+        </div>
+        
+        <div class="task-item completed" onclick="showTaskDetails('task6')">
+          <div class="task-content">
+            <div class="task-title">Emergency Response Exercise</div>
+            <div class="task-details">Apr 18 • 3 hours • Training Grounds</div>
+          </div>
+          <div class="task-actions">
+            <span class="completed-tag">Completed</span>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <script src="js/script.js"></script>
+    
+    <div id="profile-tab" class="tab-content">
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-value">Silver</div>
+          <div class="stat-label">Volunteer Level</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">87%</div>
+          <div class="stat-label">Completion Rate</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">4.8</div>
+          <div class="stat-label">Rating</div>
+        </div>
+      </div>
+      
+      <div class="tasks">
+        <h2 class="section-title">Your Profile</h2>
+        <div style="padding: 20px;">
+          <h3 style="margin-top: 0;">Sasha</h3>
+          <p>Volunteer since January 2025</p>
+          <p>Areas of expertise: Emergency Response, First Aid, Community Safety</p>
+          <p>Total hours contributed: 36</p>
+          <p>Achievements: 3 badges earned</p>
+          
+          <div style="margin-top: 20px;">
+            <button class="accept-btn" style="width: 100%;">Edit Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="settings-tab" class="tab-content">
+      <div class="tasks">
+        <h2 class="section-title">Settings</h2>
+        <div style="padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span>Email Notifications</span>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span>SMS Alerts</span>
+            <label class="toggle-switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span>Task Reminders</span>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span>Public Profile</span>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div style="margin-top: 20px;">
+            <button class="accept-btn" style="width: 100%;">Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Task Details Modal -->
+  <div id="taskModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle">Task Details</h2>
+      <div id="modalContent">
+        <!-- Content will be dynamically inserted here -->
+      </div>
+      <div class="modal-actions">
+        <button class="decline-btn" onclick="closeModal()">Close</button>
+        <button id="modalAction" class="accept-btn">Accept Task</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stats Details Modal -->
+  <div id="statsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeStatsModal()">&times;</span>
+      <h2 id="statsModalTitle">Statistics</h2>
+      <div id="statsModalContent">
+        <!-- Content will be dynamically inserted here -->
+      </div>
+      <div class="modal-actions">
+        <button class="decline-btn" onclick="closeStatsModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Notification -->
+  <div id="notification" class="notification">
+    Task accepted successfully!
+  </div>
+  
+  <script>
+    // Task details functionality
+    function showTaskDetails(taskId) {
+      const modal = document.getElementById('taskModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalContent = document.getElementById('modalContent');
+      const modalAction = document.getElementById('modalAction');
+      
+      // Set content based on task ID
+      switch(taskId) {
+        case 'task1':
+          modalTitle.textContent = 'Emergency Response Training';
+          modalContent.innerHTML = `
+            <p><strong>Date:</strong> May 2, 2025</p>
+            <p><strong>Time:</strong> 9:00 AM - 11:00 AM</p>
+            <p><strong>Location:</strong> Fire Station #3, 123 Main Street</p>
+            <p><strong>Description:</strong> Join us for essential emergency response training. You'll learn basic techniques for handling fire emergencies, evacuation procedures, and how to assist first responders.</p>
+            <p><strong>Requirements:</strong> No prior experience needed. Please wear comfortable clothing.</p>
+          `;
+          modalAction.textContent = 'Accept Task';
+          modalAction.onclick = function() { acceptTaskFromModal('task1'); };
+          break;
+        case 'task2':
+          modalTitle.textContent = 'Community Fire Safety Workshop';
+          modalContent.innerHTML = `
+            <p><strong>Date:</strong> May 8, 2025</p>
+            <p><strong>Time:</strong> 2:00 PM - 5:00 PM</p>
+            <p><strong>Location:</strong> Community Center, 456 Oak Avenue</p>
+            <p><strong>Description:</strong> Help educate community members about fire safety procedures for homes and workplaces. You'll assist in demonstrations and provide information to attendees.</p>
+            <p><strong>Requirements:</strong> Basic knowledge of fire safety preferred but not required. A friendly, helpful attitude is essential.</p>
+          `;
+          modalAction.textContent = 'Accept Task';
+          modalAction.onclick = function() { acceptTaskFromModal('task2'); };
+          break;
+        case 'task3':
+          modalTitle.textContent = 'Equipment Maintenance';
+          modalContent.innerHTML = `
+            <p><strong>Date:</strong> May 15, 2025</p>
+            <p><strong>Time:</strong> 10:00 AM - 2:00 PM</p>
+            <p><strong>Location:</strong> Main Station, 789 Fire Road</p>
+            <p><strong>Description:</strong> Help maintain and organize essential firefighting equipment. Tasks include cleaning, basic maintenance checks, and proper storage of gear.</p>
+            <p><strong>Requirements:</strong> Ability to lift 30 pounds. Training will be provided on site.</p>
+          `;
+          modalAction.textContent = 'Accept Task';
+          modalAction.onclick = function() { acceptTaskFromModal('task3'); };
+          break;
+        case 'task4':
+          modalTitle.textContent = 'First Aid Training Session';
+          modalContent.innerHTML = `
+            <p><strong>Date:</strong> May 1, 2025</p>
+            <p><strong>Time:</strong> 1:00 PM - 3:00 PM</p>
+            <p><strong>Location:</strong> Community Hospital, 321 Health Way</p>
+            <p><strong>Description:</strong> Assist in delivering basic first aid training to community members. You'll help demonstrate techniques and guide participants through practice exercises.</p>
+            <p><strong>Requirements:</strong> Basic first aid knowledge. Certification is a plus but not required.</p>
+            <p><strong>Status:</strong> Accepted</p>
+          `;
+          modalAction.textContent = 'Cancel Task';
+          modalAction.onclick = function() { cancelTask('task4'); };
+          break;
+        case 'task5':
+        case 'task6':
+          const isTask5 = taskId === 'task5';
+          modalTitle.textContent = isTask5 ? 'School Fire Drill Assistance' : 'Emergency Response Exercise';
+          modalContent.innerHTML = `
+            <p><strong>Date:</strong> ${isTask5 ? 'April 25' : 'April 18'}, 2025</p>
+            <p><strong>Time:</strong> ${isTask5 ? '10:00 AM - 12:00 PM' : '9:00 AM - 12:00 PM'}</p>
+            <p><strong>Location:</strong> ${isTask5 ? 'Lincoln Elementary, 555 School Drive' : 'Training Grounds, 888 Practice Lane'}</p>
+            <p><strong>Description:</strong> ${isTask5 ? 'Assisted in conducting a safe and orderly fire drill at the elementary school. Helped guide students and staff during evacuation procedures.' : 'Participated in a simulated emergency scenario to practice response protocols. Assisted with setup and coordination of the exercise.'}</p>
+            <p><strong>Feedback:</strong> Excellent work! Your assistance was greatly appreciated.</p>
+            <p><strong>Status:</strong> Completed</p>
+          `;
+          modalAction.style.display = 'none';
+          break;
+      }
+      
+      modal.style.display = 'flex';
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById('taskModal');
+      modal.style.display = 'none';
+      document.getElementById('modalAction').style.display = 'block';
+    }
+    
+    function acceptTask(taskId) {
+      showNotification('Task accepted successfully!');
+      
+      // Move task to Your Tasks section
+      const taskElement = document.querySelector([onclick="showTaskDetails('${taskId}')"]);
+      const taskActions = taskElement.querySelector('.task-actions');
+      
+      // Update actions
+      taskActions.innerHTML = '<span class="accepted-tag">Accepted</span>';
+      
+      // Move to Your Tasks
+      const yourTasksSection = document.querySelector('.tasks:nth-of-type(2)');
+      yourTasksSection.insertBefore(taskElement, yourTasksSection.children[1]);
+      
+      // Update stats
+      document.querySelector('.stat-box:nth-child(3) .stat-value').textContent = '4';
+    }
+    
+    function acceptTaskFromModal(taskId) {
+      closeModal();
+      acceptTask(taskId);
+    }
+    
+    function declineTask(taskId) {
+      showNotification('Task declined');
+      
+      // Remove task from list
+      const taskElement = document.querySelector([onclick="showTaskDetails('${taskId}')"]);
+      taskElement.style.animation = 'slide-out 0.3s forwards';
+      setTimeout(() => {
+        taskElement.remove();
+      }, 300);
+    }
+    
+    function cancelTask(taskId) {
+      closeModal();
+      showNotification('Task canceled');
+      
+      // Update task status
+      const taskElement = document.querySelector([onclick="showTaskDetails('${taskId}')"]);
+      const taskActions = taskElement.querySelector('.task-actions');
+      
+      // Remove from Your Tasks
+      taskElement.remove();
+      
+      // Update stats
+      document.querySelector('.stat-box:nth-child(3) .stat-value').textContent = '2';
+    }
+    
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.style.display = 'block';
+      
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 3000);
+    }
+    
+    // Stats details functionality
+    function showStatsDetails(statsType) {
+      const modal = document.getElementById('statsModal');
+      const modalTitle = document.getElementById('statsModalTitle');
+      const modalContent = document.getElementById('statsModalContent');
+      
+      switch(statsType) {
+        case 'completed':
+          modalTitle.textContent = 'Completed Tasks';
+          modalContent.innerHTML = `
+            <div style="margin-bottom: 15px;">
+              <h3>April 2025</h3>
+              <ul>
+                <li>School Fire Drill Assistance - Apr 25 (2 hours)</li>
+                <li>Emergency Response Exercise - Apr 18 (3 hours)</li>
+                <li>Community Safety Talk - Apr 10 (2 hours)</li>
+                <li>Equipment Inventory - Apr 5 (3 hours)</li>
+              </ul>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <h3>March 2025</h3>
+              <ul>
+                <li>Station Open House - Mar 28 (4 hours)</li>
+                <li>Fire Prevention Workshop - Mar 22 (3 hours)</li>
+                <li>Emergency Response Training - Mar 15 (4 hours)</li>
+                <li>School Visit - Mar 8 (2 hours)</li>
+                <li>Equipment Maintenance - Mar 3 (3 hours)</li>
+              </ul>
+            </div>
+            <div>
+              <h3>February 2025</h3>
+              <ul>
+                <li>First Aid Course - Feb 20 (6 hours)</li>
+                <li>Community Outreach - Feb 12 (4 hours)</li>
+              </ul>
+            </div>
+          `;
+          break;
+        case 'hours':
+          modalTitle.textContent = 'Hours Contributed';
+          modalContent.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+              <h3>Total Hours: 36</h3>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <h3>By Month</h3>
+              <ul>
+                <li>April 2025: 10 hours</li>
+                <li>March 2025: 16 hours</li>
+                <li>February 2025: 10 hours</li>
+              </ul>
+            </div>
+            <div>
+              <h3>By Activity Type</h3>
+              <ul>
+                <li>Training Sessions: 14 hours</li>
+                <li>Community Outreach: 9 hours</li>
+                <li>Equipment Maintenance: 6 hours</li>
+                <li>Emergency Drills: 7 hours</li>
+              </ul>
+            </div>
+          `;
+          break;
+        case 'pending':
+          modalTitle.textContent = 'Pending Tasks';
+          modalContent.innerHTML = `
+            <div>
+              <p><strong>Accepted Tasks:</strong></p>
+              <ul>
+                <li>First Aid Training Session - May 1 (2 hours)</li>
+              </ul>
+            </div>
+            <div style="margin-top: 15px;">
+              <p><strong>Available Tasks:</strong></p>
+              <ul>
+                <li>Emergency Response Training - May 2 (2 hours)</li>
+                <li>Community Fire Safety Workshop - May 8 (3 hours)</li>
+                <li>Equipment Maintenance - May 15 (4 hours)</li>
+              </ul>
+            </div>
+          `;
+          break;
+      }
+      
+      modal.style.display = 'flex';
+    }
+    
+    function closeStatsModal() {
+      const modal = document.getElementById('statsModal');
+      modal.style.display = 'none';
+    }
+    
+    // Tab functionality
+    function showTab(tabId) {
+      // Hide all tabs
+      const tabs = document.getElementsByClassName('tab-content');
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('active-tab');
+      }
+      
+      // Show selected tab
+      document.getElementById(tabId).classList.add('active-tab');
+      
+      // Update active nav item
+      const navItems = document.getElementsByClassName('nav-item');
+      for (let i = 0; i < navItems.length; i++) {
+        navItems[i].style.borderBottom = 'none';
+        navItems[i].style.color = '#777';
+      }
+      
+      const activeNavItem = document.querySelector(nav-item[onclick="showTab('${tabId}')"]);
+      activeNavItem.style.borderBottom = '2px solid #e74c3c';
+      activeNavItem.style.color = '#e74c3c';
+    }
+    
+    // Init
+    const navItems = document.getElementsByClassName('nav-item');
+    navItems[0].style.borderBottom = '2px solid #e74c3c';
+    navItems[0].style.color = '#e74c3c';
+    
+    // Add event listeners for closing modals when clicking outside
+    window.onclick = function(event) {
+      const taskModal = document.getElementById('taskModal');
+      const statsModal = document.getElementById('statsModal');
+      if (event.target === taskModal) {
+        closeModal();
+      }
+      if (event.target === statsModal) {
+        closeStatsModal();
+      }
+    }
+  </script>
 </body>
 </html>

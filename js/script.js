@@ -155,10 +155,10 @@ window.addEventListener('click', e => {
 
 
 //WEather popup code for backend
-document.getElementById('weatherPopup').addEventListener('click', function() {
-    // Replace with your weather API provider's website URL
-    window.open('https://www.weatherapi.com/', '_blank');
-  });
+// document.getElementById('weatherPopup').addEventListener('click', function() {
+//     // Replace with your weather API provider's website URL
+//     window.open('https://www.weatherapi.com/', '_blank');
+//   });
 
   function classifyCondition(temperature, humidity) {
     // Example thresholds (customize these)
@@ -271,8 +271,8 @@ function addBotMessage(text) {
 
 // Update the fetchLLMResponse function in your script
 async function fetchLLMResponse(query) {
-    const GROQ_API_KEY = 'MyAPI'; // Replace with your actual key
-    const API_URL = 'MyAPIURL';
+    const GROQ_API_KEY = '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'; // Replace with your actual key
+    const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
     try {
         const response = await fetch(API_URL, {
