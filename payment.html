@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Payment - ReliefNet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .payment-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .donation-amount {
+            font-size: 2rem;
+            color: #2ecc71;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="payment-container">
+            <h2>Complete Your Donation</h2>
+            <div id="selectedAmount" class="donation-amount"></div>
+            
+            <form id="paymentForm" onsubmit="processPayment(event)">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Payment Method</label>
+                    <select class="form-select" required>
+                        <option value="">Select Payment Method</option>
+                        <option>Credit/Debit Card</option>
+                        <option>UPI</option>
+                        <option>Net Banking</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Complete Donation</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get amount from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const amount = urlParams.get('amount');
+        document.getElementById('selectedAmount').textContent = `₹${amount}`;
+
+        function processPayment(e) {
+            e.preventDefault();
+            // Add actual payment gateway integration here
+            alert('Payment successful! Thank you for your donation.');
+            window.location.href = 'confirmation.html'; // Optional confirmation page
+        }
+    </script>
+</body>
+</html>

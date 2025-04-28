@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReliefNet - Disaster Response</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        
+        <div class="logo-container">
+            <div class="logo-text">RELIEFNET</div>
+        </div>
+        
+        <!-- Auth Buttons Container -->
+        <div class="auth-buttons">
+            <button class="login-btn">Login</button>
+            <button class="register-btn">Register</button>
+        </div>
+        
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">Emergency Response Network</h1>
+            <p class="hero-subtitle">Connecting people in need with life-saving resources during disasters</p>
+            <a href="SOS.html"><button class="sos-button">
+                <span class="sos-text">SEND SOS</span>
+                <span class="sos-pulse"></span>
+            </button></a>
+        </div>
+        
+        <img src="images/Heroooo.jpg" alt="Disaster" class="hero-image">
+        
+        <!-- Animated Strip -->
+        <div class="marquee-strip">
+            <div class="marquee-text">
+                🚨 LIVE DISASTER CONDITION! 🚨 CYCLONE WARNING IN COASTAL AREAS 🚨 HEAVY RAINFALL EXPECTED IN NORTHERN REGIONS 🚨
+            </div>
+        </div>
+        
+        <!-- Login Form (Initially hidden) -->
+        <div class="auth-modal" id="authModal">
+            <div class="auth-modal-content">
+                <div class="toggle-container">
+                    <div class="toggle-slider"></div>
+                    <button class="toggle-btn active" data-role="volunteer">Volunteer</button>
+                    <button class="toggle-btn" data-role="admin">Admin</button>
+                </div>
+                
+                <!-- Volunteer Form -->
+                <form class="auth-form volunteer-form show">
+                    <h3>Volunteer Login</h3>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                    <p class="switch-text">Don't have an account? <a href="#" class="switch-form">Register</a></p>
+                </form>
+                
+                <!-- Admin Form -->
+                <form class="auth-form admin-form">
+                    <h3>Admin Login</h3>
+                    <input type="email" placeholder="Admin Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <input type="text" placeholder="Security Code" required>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title mb-5">Our Emergency Services</h2>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3>Real-time Alerts</h3>
+                        <p>Get instant notifications about disasters in your area and stay informed about the latest developments.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3>Disaster Mapping</h3>
+                        <p>Access live maps showing affected areas, emergency shelters, and evacuation routes during disasters.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3>Volunteer Network</h3>
+                        <p>Join our community of volunteers or request assistance from trained personnel during emergencies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cards Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title">Emergency Resources</h2>
+            
+            <div class="row">
+                <!-- Card 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="disaster-card">
+                        <a href="volunteer.html"><div class="card-image-container">
+                            <img src="images/volunteer.avif" class="card-image" alt="Volunteer"></a>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-title">Become a Volunteer</h2>
+                            <p class="card-text">Help people in need. Your skills and time can make a significant difference in someone's life during emergencies.</p>
+                            <a href="volunteer.html" class="card-button">Join Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="disaster-card">
+                        <div class="card-image-container">
+                            <a href="payment.html?amount=500">
+                                <img src="images/Donation.jpg" class="card-image" alt="Donation">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-title">Make a Donation</h2>
+                            <p class="card-text">Your contribution can provide essential supplies, medical aid, and support to those affected by disasters.</p>
+                            <a href="payment.html?amount=500" class="card-button">Donate Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="disaster-card">
+                        <div class="card-image-container">
+                            <a href="https://zoom.earth/maps/satellite-hd/#view=27.895,76.729,6.55z/date=2025-04-26,pm"><img src="images/Disaster.jpg" class="card-image" alt="Disaster Map"></a>
+                            <div id="disasterMap"></div>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-title">Live Disaster Map</h2>
+                            <p class="card-text">View real-time crisis locations, risk zones, and emergency resources available in affected areas.</p>
+                            <a href="https://zoom.earth/maps/satellite-hd/#view=27.895,76.729,6.55z/date=2025-04-26,pm" class="card-button">View Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Emergency Information Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2>Be Prepared for Emergencies</h2>
+                    <p class="lead mb-4">Disasters can strike with little warning. Having an emergency plan can save lives.</p>
+                    
+                    <div class="accordion" id="emergencyAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    Emergency Kit Essentials
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#emergencyAccordion">
+                                <div class="accordion-body">
+                                    <ul class="mb-0">
+                                        <li>Water (one gallon per person per day for several days)</li>
+                                        <li>Non-perishable food (at least a three-day supply)</li>
+                                        <li>Battery-powered radio and extra batteries</li>
+                                        <li>Flashlight and extra batteries</li>
+                                        <li>First aid kit and medications</li>
+                                        <li>Emergency contact information</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    Family Emergency Plan
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#emergencyAccordion">
+                                <div class="accordion-body">
+                                    <p class="mb-0">Create a family emergency plan that includes:</p>
+                                    <ul class="mb-0">
+                                        <li>Meeting locations (both in your neighborhood and outside your area)</li>
+                                        <li>Emergency contact information</li>
+                                        <li>Evacuation routes from your home and neighborhood</li>
+                                        <li>How to shut off utilities</li>
+                                        <li>Special needs considerations for family members</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                    During a Disaster
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#emergencyAccordion">
+                                <div class="accordion-body">
+                                    <ul class="mb-0">
+                                        <li>Stay calm and follow your emergency plan</li>
+                                        <li>Listen to emergency broadcasts for instructions</li>
+                                        <li>Evacuate if authorities recommend it</li>
+                                        <li>Check on neighbors, especially elderly or disabled</li>
+                                        <li>Use text messaging instead of phone calls to communicate</li>
+                                        <li>Press the SOS button on ReliefNet if you need immediate assistance</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Emergency Preparedness" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Weather Widget -->
+    <div class="weather-popup" id="weatherPopup">
+        <div class="weather-card">
+            <div class="weather-header">
+                <h3>Current Conditions</h3>
+                <div class="weather-status">🌤 Normal</div>
+            </div>
+            
+            <div class="weather-details">
+                <div class="weather-item">
+                    <span class="label">Temperature:</span>
+                    <span class="value">50°C</span>
+                </div>
+                <div class="weather-item">
+                    <span class="label">Humidity:</span>
+                    <span class="value">65%</span>
+                </div>
+                <div class="weather-item">
+                    <span class="label">Feels Like:</span>
+                    <span class="value">30°C</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-trigger" onclick="toggleChat()">
+            <img src="images/chatbot.jpg" alt="Sasha" class="chatbot-avatar">
+            <div class="chatbot-greeting">Hello, I am Sasha</div>
+        </div>
+        
+        <div class="chatbot-window">
+            <div class="chat-header">
+                <h4>Sasha - ReliefNet Assistant</h4>
+                <button class="close-btn" onclick="toggleChat()">×</button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="bot-message">How can I help you today?</div>
+                
+                <!-- FAQ Buttons -->
+                <div class="faq-buttons">
+                    <button class="faq-btn" onclick="sendFAQ('How to report an emergency?')">Report Emergency</button>
+                    <button class="faq-btn" onclick="sendFAQ('Where are nearby shelters?')">Find Shelters</button>
+                    <button class="faq-btn" onclick="sendFAQ('How to volunteer?')">Volunteer Info</button>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your question...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">ReliefNet</h3>
+                    <p>Connecting those in need with life-saving resources during disasters and emergencies.</p>
+                    <div class="social-media">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Donate</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Disaster Preparedness</a></li>
+                        <li><a href="#">Emergency Contacts</a></li>
+                        <li><a href="#">Training Programs</a></li>
+                        <li><a href="#">Volunteer Opportunities</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Relief Street, City</li>
+                        <li><i class="fas fa-phone me-2"></i> Emergency: 1800-HELP-NOW</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@reliefnet.org</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 ReliefNet. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    
+</body>
+</html>

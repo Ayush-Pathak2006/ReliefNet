@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Sent - ReliefNet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            padding-top: 50px;
+        }
+        
+        .confirmation-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .status-header {
+            background-color: #28a745;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .status-icon {
+            font-size: 5rem;
+            margin-bottom: 15px;
+        }
+        
+        .status-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .tracking-number {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+        .tracking-label {
+            display: block;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .instructions {
+            background-color: #e9f7ef;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            text-align: left;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .instructions h3 {
+            color: #28a745;
+            margin-top: 0;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .progress-tracker {
+            margin: 30px 0;
+        }
+        
+        .progress-step {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .active-step .step-icon {
+            background-color: #28a745;
+        }
+        
+        .pending-step .step-icon {
+            background-color: #6c757d;
+        }
+        
+        .step-text {
+            flex: 1;
+        }
+        
+        .step-text h4 {
+            margin: 0;
+        }
+        
+        .step-text p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .safety-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8d7da;
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .safety-tips h3 {
+            color: #721c24;
+            margin-top: 0;
+        }
+        
+        .home-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .home-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .sos-id-copy {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+        
+        .estimated-time {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="confirmation-container">
+            <div class="status-header">
+                <div class="status-icon">✓</div>
+                <div class="status-title">SOS Alert Sent</div>
+                <p>Your emergency alert has been successfully dispatched</p>
+            </div>
+            
+            <div class="tracking-number">
+                <span class="tracking-label">YOUR SOS ID</span>
+                <span id="sosId">SOS-23847-IN</span>
+                <span class="sos-id-copy" onclick="copyToClipboard('sosId')">Copy</span>
+            </div>
+            
+            <div class="estimated-time pulse-animation">
+                Estimated response time: <span id="etaTime">15-20 minutes</span>
+            </div>
+            
+            <div class="instructions">
+                <h3>What happens next?</h3>
+                <ul>
+                    <li>Your alert has been sent to the nearest emergency response team</li>
+                    <li>Your location and emergency details have been shared with authorities</li>
+                    <li>Keep your phone on and nearby to receive calls or updates</li>
+                    <li>If possible, stay where you are to help responders find you</li>
+                </ul>
+            </div>
+            
+            <div class="progress-tracker">
+                <h3>Response Progress</h3>
+                
+                <div class="progress-step active-step">
+                    <div class="step-icon">1</div>
+                    <div class="step-text">
+                        <h4>Alert Received</h4>
+                        <p>Your emergency has been logged in our system</p>
+                    </div>
+                </div>
+                
+                <div class="progress-step active-step">
+                    <div class="step-icon">2</div>
+                    <div class="step-text">
+                        <h4>Team Dispatched</h4>
+                        <p>Rescue team is being mobilized</p>
+                    </div>
+                </div>
+                
+                <div class="progress-step pending-step">
+                    <div class="step-icon">3</div>
+                    <div class="step-text">
+                        <h4>En Route</h4>
+                        <p>Help is on the way to your location</p>
+                    </div>
+                </div>
+                
+                <div class="progress-step pending-step">
+                    <div class="step-icon">4</div>
+                    <div class="step-text">
+                        <h4>Assistance Arrived</h4>
+                        <p>Emergency responders have reached you</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="safety-tips">
+                <h3>Safety Tips While You Wait</h3>
+                <ul>
+                    <li>Stay calm and conserve your energy</li>
+                    <li>If injured, try to apply pressure to wounds if possible</li>
+                    <li>If in a dangerous area, move to safer ground only if you can do so safely</li>
+                    <li>If trapped, make noise periodically to help rescuers locate you</li>
+                </ul>
+            </div>
+            
+            <button class="home-button" onclick="window.location.href='index.html'">Return to Home</button>
+        </div>
+    </div>
+    
+    <script>
+        // Generate a random SOS ID
+        function generateSOSId() {
+            const prefix = "SOS";
+            const randomNum = Math.floor(10000 + Math.random() * 90000);
+            const countrySuffix = "IN";
+            return `${prefix}-${randomNum}-${countrySuffix}`;
+        }
+        
+        // Set random SOS ID when page loads
+        window.onload = function() {
+            document.getElementById('sosId').innerText = generateSOSId();
+            
+            // Simulate a random ETA between 10-30 minutes
+            const minTime = 10;
+            const maxTime = 30;
+            const randomETA = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+            document.getElementById('etaTime').innerText = `${randomETA} minutes`;
+        };
+        
+        // Copy SOS ID to clipboard
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                alert("SOS ID copied to clipboard!");
+            }, function() {
+                alert("Failed to copy text");
+            });
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

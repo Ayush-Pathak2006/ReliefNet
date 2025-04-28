@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Statistics</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="stats-container">
+        <header>
+            <h1>Volunteer Analytics Dashboard</h1>
+            <p>Comprehensive overview of volunteer participation and impact</p>
+        </header>
+
+        <div class="stat-cards">
+            <div class="stat-card total-volunteers">
+                <h3>Total Volunteers</h3>
+                <div class="stat-value">1,250</div>
+                <div class="stat-change positive">+12% since last month</div>
+            </div>
+            
+            <div class="stat-card active-volunteers">
+                <h3>Active Volunteers</h3>
+                <div class="stat-value">875</div>
+                <div class="stat-change positive">+8% since last month</div>
+            </div>
+            
+            <div class="stat-card hours-contributed">
+                <h3>Hours Contributed</h3>
+                <div class="stat-value">9,540</div>
+                <div class="stat-change positive">+15% since last month</div>
+            </div>
+            
+            <div class="stat-card projects-completed">
+                <h3>Projects Completed</h3>
+                <div class="stat-value">42</div>
+                <div class="stat-change positive">+5% since last month</div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-box">
+                <h3>Volunteer Growth</h3>
+                <canvas id="volunteerGrowthChart"></canvas>
+            </div>
+            
+            <div class="chart-box">
+                <h3>Volunteer Distribution by Department</h3>
+                <canvas id="departmentChart"></canvas>
+            </div>
+            
+            <div class="chart-box">
+                <h3>Hours Contributed Monthly</h3>
+                <canvas id="hoursContributedChart"></canvas>
+            </div>
+            
+            <div class="chart-box">
+                <h3>Volunteer Age Distribution</h3>
+                <canvas id="ageDistributionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
