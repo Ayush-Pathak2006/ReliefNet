@@ -1,9 +1,4 @@
-// SOS Button Click Handler (to be implemented)
-// document.querySelector('.sos-button').addEventListener('click', () => {
-//     alert('SOS feature coming soon!');
-// });
 
-// script.js - Google Maps Version
 let map;
 console.log("Chart.js loaded:", typeof Chart !== 'undefined');console.log("Chart.js loaded:", typeof Chart !== 'undefined');
 
@@ -153,13 +148,6 @@ window.addEventListener('click', e => {
   if (e.target === authModal) authModal.style.display = 'none';
 });
 
-
-//WEather popup code for backend
-// document.getElementById('weatherPopup').addEventListener('click', function() {
-//     // Replace with your weather API provider's website URL
-//     window.open('https://www.weatherapi.com/', '_blank');
-//   });
-
 // Add this toggle functionality
 function toggleWeatherWidget() {
     const popup = document.getElementById('weatherPopup');
@@ -241,113 +229,7 @@ function toggleWeatherWidget() {
   };
   updateWeather(sampleData);
 
-  let isChatOpen = false;
-
-function toggleChat() {
-    const chatWindow = document.querySelector('.chatbot-window');
-    const greeting = document.querySelector('.chatbot-greeting');
-    isChatOpen = !isChatOpen;
-    
-    chatWindow.classList.toggle('active', isChatOpen);
-    greeting.style.display = isChatOpen ? 'none' : 'block';
-}
-
-function sendMessage() {
-    const input = document.getElementById('userInput');
-    const message = input.value.trim();
-    
-    if(message) {
-        addUserMessage(message);
-        // Backend integration point
-        fetchLLMResponse(message).then(response => {
-            addBotMessage(response);
-        });
-        input.value = '';
-    }
-}
-
-function sendFAQ(question) {
-    addUserMessage(question);
-    // Backend integration point
-    fetchLLMResponse(question).then(response => {
-        addBotMessage(response);
-    });
-}
-
-// Backend developer should implement this
-async function fetchLLMResponse(query) {
-    // Example API call
-    /*
-    const response = await fetch('/chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: query })
-    });
-    return await response.json();
-    */
-    return "This is a sample response. Backend developer will connect the LLM here.";
-}
-
-function addUserMessage(text) {
-    const messages = document.getElementById('chatMessages');
-    const div = document.createElement('div');
-    div.className = 'user-message';
-    div.textContent = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
-}
-
-function addBotMessage(text) {
-    const messages = document.getElementById('chatMessages');
-    const div = document.createElement('div');
-    div.className = 'bot-message';
-    div.textContent = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
-}
-
-// Update the fetchLLMResponse function in your script
-async function fetchLLMResponse(query) {
-    const GROQ_API_KEY = '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'; // Replace with your actual key
-    const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${GROQ_API_KEY}`
-            },
-            body: JSON.stringify({
-                model: "llama3-70b-8192", // Or other model you prefer
-                messages: [{
-                    role: "user",
-                    content: query
-                }],
-                temperature: 0.7,
-                max_tokens: 1024
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data.choices[0].message.content;
-
-    } catch (error) {
-        console.error('Error fetching response:', error);
-        return "Sorry, I'm having trouble connecting to the service.";
-    }
-}
-
-
 // volunteer js
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const volunteerStatsCard = document.getElementById('volunteer-stats-card');
     
