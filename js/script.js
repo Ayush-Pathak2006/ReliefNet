@@ -160,6 +160,45 @@ window.addEventListener('click', e => {
 //     window.open('https://www.weatherapi.com/', '_blank');
 //   });
 
+// Add this toggle functionality
+function toggleWeatherWidget() {
+    const popup = document.getElementById('weatherPopup');
+    const trigger = document.getElementById('weatherTrigger');
+    
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      // Mobile behavior
+      popup.classList.toggle('active');
+      trigger.style.display = popup.classList.contains('active') ? 'none' : 'flex';
+    } else {
+      // Desktop behavior
+      popup.classList.toggle('minimized');
+      trigger.style.display = popup.classList.contains('minimized') ? 'flex' : 'none';
+    }
+  }
+  
+  // Add event listeners
+  document.getElementById('weatherPopup').addEventListener('click', function(e) {
+    if (!window.matchMedia("(max-width: 767px)").matches && !e.target.closest('.weather-card')) {
+      toggleWeatherWidget();
+    }
+  });
+  
+  document.getElementById('weatherTrigger').addEventListener('click', toggleWeatherWidget);
+  
+  // Initialize based on device
+  window.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('weatherPopup');
+    const trigger = document.getElementById('weatherTrigger');
+    
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      popup.classList.remove('active');
+      trigger.style.display = 'flex';
+    } else {
+      trigger.style.display = 'none';
+      popup.classList.remove('minimized');
+    }
+  });
+
   function classifyCondition(temperature, humidity) {
     // Example thresholds (customize these)
     if (temperature >= 35 || humidity >= 80) return { 

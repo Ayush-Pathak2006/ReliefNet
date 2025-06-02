@@ -286,7 +286,21 @@
     </section>
     
     <!-- Weather Widget -->
+    <div class="weather-trigger" id="weatherTrigger">
+        <div class="trigger-icon">🌤️</div>
+      </div>
+
+      <!-- Add close button to weather header -->
+
+
     <div class="weather-popup" id="weatherPopup">
+
+        <div class="weather-header">
+            <h3>Current Conditions</h3>
+            <div class="weather-status">🌤 Normal</div>
+            <button class="mobile-close-btn" onclick="toggleWeatherWidget()">×</button>
+        </div>
+
         <div class="weather-card">
             <div class="weather-header">
                 <h3>Current Conditions</h3>

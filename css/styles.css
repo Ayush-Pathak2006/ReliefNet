@@ -393,6 +393,101 @@ body { font-family: 'Poppins', sans-serif; color: #333; }
 .weather-status.moderate { background: #f1c40f; }
 .weather-status.normal { background: #2ecc71; }
 
+.weather-trigger {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: #3498db;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1001;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.weather-trigger:hover {
+  transform: scale(1.1);
+}
+
+.trigger-icon {
+  color: white;
+  font-size: 1.5rem;
+}
+
+/* Mobile Behavior */
+@media (max-width: 767px) {
+  .weather-popup {
+    position: fixed;
+    bottom: -100%;
+    right: 20px;
+    transition: bottom 0.3s ease;
+  }
+  
+  .weather-popup.active {
+    bottom: 20px;
+  }
+  
+  .weather-trigger {
+    display: flex;
+  }
+}
+
+/* Desktop Behavior */
+@media (min-width: 768px) {
+  .weather-popup {
+    cursor: pointer;
+  }
+  
+  .weather-popup.minimized {
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .weather-trigger {
+    display: none;
+  }
+  
+  .weather-popup:hover .weather-trigger {
+    display: flex;
+  }
+}
+
+/* Add mobile close button styles */
+.mobile-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .mobile-close-btn {
+      display: block;
+  }
+  
+  .weather-popup {
+      bottom: -100%;
+      right: 20px;
+      left: 20px;
+      width: auto;
+  }
+  
+  .weather-popup.active {
+      bottom: 70px; /* Make space for trigger button */
+  }
+}
+
 /* Chatbot */
 .chatbot-container {
   position: fixed;
@@ -1060,4 +1155,140 @@ body {
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity:0;}
+}
+
+
+/* ===== MOBILE RESPONSIVENESS ===== */
+@media (max-width: 768px) {
+  /* Hero Section Adjustments */
+  .hero-section {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Logo & Auth Buttons */
+  .logo-container {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .logo-text {
+    font-size: 1.4rem;
+  }
+  
+  .auth-buttons {
+    top: 15px;
+    right: 15px;
+    gap: 8px;
+  }
+  
+  .register-btn, 
+  .login-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+
+  /* SOS Button */
+  .sos-button {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+  }
+
+  /* Navigation & Layout */
+  .features-section {
+    padding: 3rem 0;
+  }
+
+  .card-image-container {
+    flex: 0 0 40vh;
+  }
+
+  /* Disaster Map */
+  #disasterMap {
+    height: 40vh;
+  }
+
+  /* Weather Popup */
+  .weather-popup {
+    width: 90%;
+    left: 5%;
+    right: auto;
+  }
+
+  /* Chatbot */
+  .chatbot-container {
+    left: 10px;
+    bottom: 10px;
+  }
+  
+  .chatbot-window {
+    width: 90vw;
+    left: -5px;
+    bottom: 60px;
+  }
+
+  /* Footer */
+  .footer-title {
+    font-size: 1.3rem;
+  }
+
+  /* Utility Classes */
+  .section-title::after {
+    width: 60px;
+  }
+
+  /* Card Layouts */
+  .stat-cards,
+  .charts-container {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+  
+  /* SOS Confirmation */
+  .confirmation-container {
+    padding: 20px;
+  }
+  
+  .status-title {
+    font-size: 2rem;
+  }
+  
+  .tracking-number {
+    font-size: 1.3rem;
+  }
+}
+
+/* Additional small device adjustments */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .logo-text {
+    font-size: 1.2rem;
+  }
+  
+  .sos-button {
+    font-size: 1.3rem;
+    padding: 0.8rem 1.8rem;
+  }
+  
+  .feature-icon {
+    font-size: 2.2rem;
+  }
 }
